@@ -8,7 +8,7 @@
         <div id="app">
             <div>
                 <input type="text" placeholder="id" v-model="Id">
-                <input type="text" placeholder="name" v-model="Name">
+                <input type="text" placeholder="name" v-model="Name" @keyup.enter='add()'><!--可以直接用按键的码值，如keyup.13(enter)-->
                 <button @click="add()">push</button>
                 <label>
                     搜索关键字:
@@ -39,12 +39,14 @@
             </table>
         </div>
         <script>
+            //自定义全局按键修饰符
+            //Vue.config.keyCodes.f2 = 113      可用于上面的keyup.f2
             //定义一个全局过滤器
             Vue.filter('dateFormat',function(dateStr,pattern=""){
                 var dt = new Date(dateStr)
                 var y=dt.getFullYear()
-                var m=dt.getMonth() + 1
-                var d=dt.getDate()
+                var m=(dt.getMonth() + 1).toString().padStart(2,'0')
+                var d=dt.getDate().toString().padStart(2,'0')
 
                 //return `${y}-${m}-${d}`
 
@@ -52,8 +54,8 @@
                     return `${y}-${m}-${d}`
                 }else{
                     var hh = dt.getHours()
-                    var mm = dt.getMinutes()
-                    var ss = dt.getSeconds()
+                    var mm = dt.getMinutes().toString().padStart(2,'0')
+                    var ss = dt.getSeconds().toString().padStart(2,'0')
                     return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
                 }
             })
