@@ -12,7 +12,7 @@
                 <button @click="add()">push</button>
                 <label>
                     搜索关键字:
-                    <input type="text" v-model="keyWords">
+                    <input type="text" v-model="keyWords" v-focus v-color="'yellow'">
                 </label>
             </div>
             <table>
@@ -41,6 +41,33 @@
         <script>
             //自定义全局按键修饰符
             //Vue.config.keyCodes.f2 = 113      可用于上面的keyup.f2
+
+            //使用Vue.directive()定义全局指令
+            //其中参数1：指令的名称，在定义的时候，指令的名称前面不需要加v-前缀，但是在调用的时候，指令前必须加v-前缀
+            //参数2：是一个对象，这个对象上，有一些指令相关的函数，这些函数可以在特定的阶段执行相关的操作
+            Vue.directive('focus',{
+                //在每个函数中，第一个元素永远是el,表示被绑定了指令的那个元素，这个el参数是一个原生的JS对象
+                bind:function(el){//每当指令绑定到元素上的时候，会立即执行这个bind函数，只执行一次
+                    //在元素刚绑定了指令，还没有插入到DOM中去的时候，调用方法没有作用
+                    //因为一个元素只有插入DOM之后，才能获取焦点
+                    //el.focus()
+                },
+                inserted:function(el){//inserted表示元素插入到DOM中的时候，会执行inserted函数(触发一次)
+                    //和JS行为有关的操作，最好在inserted中去执行,防止行为不生效
+                    el.focus()
+                },
+                updated:function(el){//当组件更新的时候，会执行updated，可能触发多次
+                }
+            })
+            Vue.directive('color',{
+                //样式只要通过指令绑定给了元素，不管这个元素有没有被插入到页面中去，这个元素肯定有了一个内联样式，会在将来被浏览器渲染出来
+                //和样式有关的操作，一般在bind中去执行
+                bind:function(el,binding){
+                    //el.style.color = 'red'
+                    el.style.color = binding.value
+                }
+            })
+
             //定义一个全局过滤器
             Vue.filter('dateFormat',function(dateStr,pattern=""){
                 var dt = new Date(dateStr)
