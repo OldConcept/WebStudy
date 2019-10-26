@@ -25,7 +25,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in list" :key="item.id">
+                    <!--之前的数据都是从data的list中直接渲染出来的-->
+                    <!--现在，自定义一个search方法，把符合所有关键字的数据保存到一个新数组中，然后再渲染出来-->
+                    <tr v-for="item in search(keyWords)" :key="item.id">
                         <td>{{item.id}}</td>
                         <td v-text="item.name"></td> <!--不能使用v-text="{{item.name}}"-->
                         <td v-text="item.ctime"></td>
@@ -67,6 +69,24 @@
                                 }
                             })
                             this.list.splice(index,1)
+                        },
+                        search(keyWords){
+                            /*var newList=[]
+                            this.list.forEach(item =>{
+                                if(item.name.indexOf(keyWords)!=-1){
+                                    newList.push(item)
+                                }
+                            })
+                            return newList*/
+                            
+                            //ES6中为字符串提供了新方法，叫做string.prototype.includes('要包含的字符串')
+                            //如果包含，则返回true，否则返回false
+                            return this.list.filter(item =>{
+                                //if(item.name.indexOf(keyWords) !=-1)
+                                if(item.name.includes(keyWords)){
+                                    return item
+                                }
+                            })
                         }                       
                     }
                 })       
