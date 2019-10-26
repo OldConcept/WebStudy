@@ -6,6 +6,11 @@
     </head>
     <body>
         <div id="app">
+            <div>
+                <input type="text" placeholder="id" v-model="Id">
+                <input type="text" placeholder="name" v-model="Name">
+                <button @click="add()">push</button>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -29,12 +34,19 @@
                 var vm = new Vue({
                     el:"#app",
                     data: {
+                        Id:"",
+                        Name:"",
                         list:[
                             {id:1,name:'奔驰',ctime: new Date()},
                             {id:2,name:'宝马',ctime: new Date()}
                         ]
                     },
-                    methods: {                       
+                    methods: {
+                        add(){
+                            var obj = {id:this.Id,name:this.Name,ctime:new Date()}
+                            this.list.push(obj)
+                            this.Id=this.Name=""
+                        }                       
                     }
                 })       
         </script>
