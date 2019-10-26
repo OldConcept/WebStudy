@@ -10,6 +10,10 @@
                 <input type="text" placeholder="id" v-model="Id">
                 <input type="text" placeholder="name" v-model="Name">
                 <button @click="add()">push</button>
+                <label>
+                    搜索关键字:
+                    <input type="text" v-model="keyWords">
+                </label>
             </div>
             <table>
                 <thead>
@@ -25,7 +29,9 @@
                         <td>{{item.id}}</td>
                         <td v-text="item.name"></td> <!--不能使用v-text="{{item.name}}"-->
                         <td v-text="item.ctime"></td>
-                        <td></td>
+                        <td>
+                            <a href="" @click.prevent="del(item.id)">delete</a><!--.prevent阻止默认事件，比如此处的超链接跳转-->
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -36,6 +42,7 @@
                     data: {
                         Id:"",
                         Name:"",
+                        keyWords:"",
                         list:[
                             {id:1,name:'奔驰',ctime: new Date()},
                             {id:2,name:'宝马',ctime: new Date()}
@@ -46,6 +53,20 @@
                             var obj = {id:this.Id,name:this.Name,ctime:new Date()}
                             this.list.push(obj)
                             this.Id=this.Name=""
+                        },
+                        del(id){
+                            /*this.list.some((item,i)=>{
+                                if(item.id == id){
+                                    this.list.splice(i,1)//三个参数，第一个是索引，第二个是从该索引开始往下几个，第三个是要插入的数据
+                                    return true;
+                                }
+                            })//在数组的some方法中，如果return true，就会立即终止这个数组的后续循环*/
+                            var index = this.list.findIndex(item =>{
+                                if(item.id = id){
+                                    return true;
+                                }
+                            })
+                            this.list.splice(index,1)
                         }                       
                     }
                 })       
