@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>表格实例</title>
+        <script src="../lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Ctime</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in list" :key="item.id">
+                        <td>{{item.id}}</td>
+                        <td v-text="item.name"></td> <!--不能使用v-text="{{item.name}}"-->
+                        <td v-text="item.ctime"></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+                var vm = new Vue({
+                    el:"#app",
+                    data: {
+                        list:[
+                            {id:1,name:'奔驰',ctime: new Date()},
+                            {id:2,name:'宝马',ctime: new Date()}
+                        ]
+                    },
+                    methods: {                       
+                    }
+                })       
+        </script>
+    </body>
+</html>
