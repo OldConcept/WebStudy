@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <!--注意：vue-resource 依赖于 vue，所以要注意先后顺序-->
+    <script src="../lib/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="get请求" @click="getInfo">
+        <input type="button" value="post请求" @click="postInfo">
+        <input type="button" value="jsonp请求" @click="jsonpInfo">
+    </div>
+    <script>
+        /*
+        //global Vue object
+        Vue.http.get('/someUrl',[options]).then(successCallback,errorCallback);
+        Vue.http.post('/someUrl',[body],[options]).then(successCallback,errorCallback);
+        //in a Vue instance
+        this.$http.get('/someUrl',[options]).then(successCallback,errorCallback);
+        this.$http.post('/someUrl',[body],[options]).then(successCallback,errorCallback);
+
+        //List of shortcut methods:
+        get(url,[options])
+        head(url,[options])
+        delete(url,[options])
+        jsonp(url,[options])
+        post(url,[body],[options])
+        put(url,[body],[options])
+        patch(url,[body],[options])
+        */
+        var vm = new Vue({
+            el:"#app",
+            data:{},
+            methods:{
+                getInfo(){
+                    //发起get请求，当发起get请求后，通过.then来设置成功的回调函数
+                    this.$http.get('http://www.phonegap100.com/appapi.php?a=getPortalCate').then(function(result){
+                        //通过result.body拿到服务器返回的成功的数据
+                        console.log(result.body)
+                    })
+                },
+                postInfo(){
+                    //发起post请求，表单提交格式application/x-www-form-urlencoded
+                    //手动发起的post请求默认没有表单格式，所以有的服务器处理不了
+                    //通过post方法的第三个参数[options]设置提交的内容类型为普通的表单数据格式{emulateJASON：true}
+                    this.$http.post('/someUrl',{},{emulateJASON:true}).then(result=>{
+                        console.log(result.body)
+                    })
+                },
+                jsonpInfo(){
+                    //发起jsonp请求
+                    this.$http.jsonp('/someUrl').then(result=>{
+                        console.log(result.body)
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
