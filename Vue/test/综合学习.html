@@ -62,6 +62,7 @@
             Vue.directive('color',{
                 //样式只要通过指令绑定给了元素，不管这个元素有没有被插入到页面中去，这个元素肯定有了一个内联样式，会在将来被浏览器渲染出来
                 //和样式有关的操作，一般在bind中去执行
+                //使用钩子函数的第二个参数binding拿到传递的值，注意value和expression的区别
                 bind:function(el,binding){
                     //el.style.color = 'red'
                     el.style.color = binding.value
