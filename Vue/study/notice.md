@@ -1,1 +1,1 @@
-###除了vue-recource实现get,post,jsonp请求外，还可以用`axios`的第三方包实现数据的请求
+### 除了vue-recource实现get,post,jsonp请求外，还可以用`axios`的第三方包实现数据的请求
