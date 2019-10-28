@@ -3,19 +3,26 @@
     <head>
         <title>表格实例</title>
         <script src="../lib/vue.js"></script>
+        <link rel="stylesheet" href="../lib/bootstrap.css">
     </head>
     <body>
         <div id="app">
-            <div>
-                <input type="text" placeholder="id" v-model="Id">
-                <input type="text" placeholder="name" v-model="Name" @keyup.enter='add()'><!--可以直接用按键的码值，如keyup.13(enter)-->
-                <button @click="add()">push</button>
-                <label>
-                    搜索关键字:
-                    <input type="text" v-model="keyWords" v-focus v-color="'yellow'">
-                </label>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">添加品牌</h3>
+                </div>
+                <div class="panel-body form-inline">
+                    <input type="text" placeholder="id" v-model="Id" class="from-control">
+                    <input type="text" placeholder="name" v-model="Name" @keyup.enter='add()' class="from-control"><!--可以直接用按键的码值，如keyup.13(enter)-->
+                    <button @click="add()" class="btn btn-primary">push</button>
+                    <label>
+                        搜索关键字:
+                        <input type="text" v-model="keyWords" v-focus v-color="'yellow'" class="from-control">
+                    </label>
+                </div>
             </div>
-            <table>
+
+            <table class="table table-bordered table-hover table-stripted">
                 <thead>
                     <tr>
                         <th>Id</th>

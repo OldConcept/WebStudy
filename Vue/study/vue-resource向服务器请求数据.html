@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-resource.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+</head>
+<body>
+    <div id="app">       
+        
+        <div class="panel panel-primary">
+              <div class="panel-heading">
+                    <h3 class="panel-title">添加品牌</h3>
+              </div>
+              <div class="panel-body form-inline">
+                  <label>
+                      name:
+                      <input type="text" v-model="name" class="from-control">
+                  </label>
+                  <input type="button" value="添加" @click="add" class="btn btn-primary">
+              </div>
+        </div>
+
+        <div>       
+        <table class="table table-bordered table-hover table-stripted">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>ctime</th>
+                    <th>operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id">
+                    <td v-text="item.id"></td>
+                    <td v-text="item.name"></td>
+                    <td v-text="item.ctime"></td>
+                    <td>
+                        <a href="" @click.prevent="del(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+               
+    </div>
+
+    <script>
+        //如果通过全局配置了请求数据接口根域名，则发起请求时应以相对路径开头，不带'\',否则不会启用根域名
+        Vue.http.options.root = 'http://vue.studyit.io/'
+        //全局启用emulateJASON选项，该处设置后，post请求函数的[options]:{emulateJASON:true}就可以不用写了
+        Vue.http.options.emulateJASON = true
+        var vw = new Vue({
+            el:'#app',
+            data:{
+                name:'',
+                list:[
+                    {id:1,name:"兰博基尼",ctime:new Date()},
+                    {id:2,name:"玛莎拉蒂",ctime:new Date()}
+                ]
+            },
+            created() {
+                //发送Ajax请求要趁早，created()是最早可用的钩子函数，最好使用该钩子函数，不能在mounted()处调用getAllList（）函数
+                //因为此时内存中的模板已经被渲染到页面中去了
+                this.getAllList()
+            },
+            methods:{
+                getAllList(){
+                    //通过$http请求获取到的数据全部都存放在result.body中
+                    this.$http.get('api/getprodlist').then(result=>{
+                        if(result.body.status === 0){
+                            this.list = result.body.message
+                        }else{
+                            alert('获取失败')
+                        }
+                    })
+                },
+                add(){
+                    this.$http.post('api/addproduct',{name : this.name}).then(result=>{
+                        if(result.body.status === 0){
+                            this.getAllList()
+                        }else{
+                            alert('发送失败')
+                        }
+                        this.name=''
+                    })
+                },
+                del(id){
+                    this.$http.get('api/delproduct'+id).then(reslut=>{
+                        if(result.body.status === 0){
+                            this.getAllList()
+                        }else{
+                            alert('删除失败')
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
