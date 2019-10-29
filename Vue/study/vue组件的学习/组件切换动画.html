@@ -22,14 +22,13 @@
     <div id="app">
         <a href="" @click.prevent="comName='login'">登录</a>
         <a href="" @click.prevent="comName='register'">注册</a>
-        <!-- Vue提供了component来展示对应名称的组件 -->
-        <!-- component是一个占位符，:is属性可以用来指定要展示的组件的名称，注意:是事件绑定，组件名为字符串，所以要加单引号 -->
+        <!-- 通过mode属性设置组件切换的模式 -->
+        <!-- 组件切换动画的实现只需要将组件放在transition标签中就行 -->
         <transition mode="out-in">
             <component :is="comName"></component>
         </transition>
     </div>
     <script>
-        //组件名称是字符串
         Vue.component('login',{
             template:'<h3>登录组件</h3>'
         })
