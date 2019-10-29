@@ -48,7 +48,7 @@
 
         <div>
         <input type="button" value="toggle2" @click="flag2=!flag2">
-        <transition name="my"><!--注意此处name属性的使用-->
+        <transition name="my"><!--注意此处name属性的使用，自定义name属性可以更换v-前缀-->
                 <h6 v-if='flag2'>这是一个h6</h6>
         </transition>
         </div>
