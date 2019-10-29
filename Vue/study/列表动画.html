@@ -50,7 +50,7 @@
         <input type="text" v-model="name">
         <input type="button" value="提交" @click="add">
         <!-- <ul> -->
-            <!--注意，在实现列表过渡的时候，如果需要过渡的元素是通过v-for渲染出来的，不能使用transition包裹,只能使用transition-group进行包裹-->
+            <!--注意，在实现列表过渡的时候，如果需要过渡的元素是通过v-for渲染出来的，不能使用transition包裹,只能使用transition-group进行包裹，transition只能用于一个-->
             <!--如果要为v-for循环创建的元素创建动画，必须要为每一个元素设置 :key 属性-->
             <!--给transition-group标签加入appear属性可以实现页面加载后入场效果-->
             <!-- 通过为transition-group元素设置tag属性，指定transition-group渲染为指定的元素，如果不指定tag属性，默认渲染为span标签 -->

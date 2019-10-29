@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 如果要调用组件，直接把组件的名称以html标签的形式引入到页面中即可 -->
+        <my-com1></my-com1>
+    </div>
+    <div id="app2">
+        <login></login>
+    </div>
+    <script>
+        //使用Vue.extend来创建全局的Vue组件
+        var com1 = Vue.extend({
+            template:'<h3>这是使用Vue.extend创建的组件</h3>'//通过template属性指定了组件要展示的html结构
+        })
+        //使用Vue.component('组件的名称',创建出来的组件模板对象)
+        //如果使用Vue.component定义全局组件的时候，组件名称使用了驼峰命名，则在使用组件的时候，需要把大写的驼峰改为小写的字母，同时两个单词之间使用-连接
+        //如果不使用驼峰，则直接拿名称来引用
+        Vue.component('myCom1',com1)
+
+        //可以这么简写
+        //Vue.component('myCom1',Vue.extend({
+        //    template:'<h3>这是使用Vue.extend创建的组件</h3>'
+        //}))
+
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{}
+        })
+
+        var vm2 = new Vue({
+            el:"#app2",
+            components:{
+                //定义实例内部私有组件
+                login:{
+                    template:'<h1>这是私有组件</h1>'
+                }
+            }
+        })
+    </script>
+</body>
+</html>
