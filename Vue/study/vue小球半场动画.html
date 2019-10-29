@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .ball{
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--
+        <transition
+          v-on:before-enter="beforeEnter"
+          v-on:enter="enter"
+          v-on:after-enter="afterEnter"
+          v-on:enter-cancelled="enterCancelled"
+
+          v-on:before-leave="beforeLeave"
+          v-on:leave="leave"
+          v-on:after-leave="afterLeave"
+          v-on:leave-cancelled="leaveCancelled"
+        >
+            这里面写一些元素，下面在Vue实例中的methods再写相应的方法
+        </transition>
+        -->
+        <input type="button" value="加入购物车" @click="flag=!flag">
+        <transition
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter"
+        >
+            <div class="ball" v-show='flag'></div>
+        </transition>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                flag:false
+            },
+            methods:{
+                //动画钩子函数的第一个参数：el，表示要执行的那个DOM元素是个原生的JS DOM对象
+                //可以认为，el是通过document.getElementById()方式获取到的原生JS DOM对象
+                beforeEnter(el){
+                    //该函数表示动画入场之前
+                    el.style.transform = "translate(0,0)"
+                },
+                enter(el,done){
+                    //此处必须设置el.offset***，如果不写，动画效果就无法显示，可以认为，el.offset***会强制动画刷新
+                    el.offsetTop
+                    //enter表示动画开始之后的样式，这里可以设置上面小球完成动画之后的结束状态
+                    el.style.transform = "translate(150px,450px)"
+                    el.style.transition = "all 2s ease"
+                    done()//当动画完成后想要小球立即消失，就要在enter后加一个参数done，这里的done其实是下面的afterEnter函数的引用
+                },
+                afterEnter(el){
+                    //动画完成之后会调用该函数
+                    this.flag = !this.flag
+                }
+            }
+        })
+    </script>
+</body>
+</html>
