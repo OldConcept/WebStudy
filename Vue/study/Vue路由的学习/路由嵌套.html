@@ -41,7 +41,7 @@
                     component:account,
                     children:[
                         {path:'login',component:login},
-                        {path:'register',component:register}//子路由的path不要加斜线
+                        {path:'register',component:register}//子路由的path不要加斜线，否则会以根路径开始请求，不方便用户去理解url地址
                     ]
                 },
             ]
