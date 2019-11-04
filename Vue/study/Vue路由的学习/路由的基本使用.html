@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../lib/vue.js"></script>
+    <script src="../../lib/vue-router.js"></script>
+    <style>
+        .router-link-active,.myactive{
+            color:red;
+            font-weight:800;
+            font-style: italic;
+            font-size: 80px;
+            text-decoration: underline;
+            /* background-color: green; */
+        }
+
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(140px);
+        }
+
+        .v-enter-active,
+        .v-leave-active{
+            transition:all 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <a href="#/login">登录</a>
+        <a href="#/register">注册</a> -->
+
+        <!-- router-link默认渲染一个a标签 -->
+        <router-link to="/login" tag="span">登录</router-link>
+        <router-link to="/register">注册</router-link>
+
+        <!-- 这是由vue-router提供的元素，专门用来当作占位符的，将来路由规则匹配到的组件就会展示到这个router-view中去 -->
+        <!-- 所以我们可以把这个标签认为是一个占位符 -->
+        <transition mode='out-in'>
+            <router-view></router-view>
+        </transition>
+    </div>
+
+    <script>
+        //组件的模板对象
+        var login = {
+            template:'<h1>登录组件</h1>'
+        }
+        var register = {
+            template:'<h1>注册组件</h1>'
+        }
+        //2.创建一个路由对象，当导入vue-router之后，在window全局对象中就有了一个路由的构造函数，叫做VueRouter
+        //在new路由对象的时候，可以为构造函数，传递一个配置对象
+        var routerObj = new VueRouter({
+            //这个配置对象中的route表示[路由匹配规则]的意思
+            routes: [
+                //每个路由匹配规则，都是一个对象，而且这个对象必须有两个属性：
+                //属性1是path,表示监听哪个路由链接地址
+                //属性2是component，表示如果路由是前面匹配到的path，则展示component属性对应的那个组件
+                //component的属性值必须是一个组件的模板对象，不能是组件的引用名称
+                //{path:'/',component:login},
+                {path:'/',redirect: '/login'},//这里的redirect和Node中的redirect是两码事
+                {path:'/login',component:login},
+                {path:'/register',component:register}
+            ],
+            linkActiveClass:'myactive'//使用这个属性的时候,前面的style就可以用自己设置的类名了
+        })
+
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            router:routerObj//将路由规则对象，注册到vm实例上，用来监听url地址的变化，然后展示相应的组件,如果对象名和属性名一致，则可以省略
+        })
+    </script>
+</body>
+</html>
