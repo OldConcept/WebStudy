@@ -4,7 +4,8 @@ const webpack = require('webpack')
 //导入html-webpack-plugin，在内存中生成html文件
 //注意：只要是插件，都必须要放到plugins节点中去
 //这个插件的作用：一是在内存中根据指定的页面生成一个页面，二是把打包好的bundle.js追加到页面中去
-const  htmlWebpackPlugin = require('html-webpack-plugin')
+const htmlWebpackPlugin = require('html-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')//require进来的都是构造函数，需要在下面的plugins里new一个实例
 
 module.exports = {
     entry: './src/main.js',
@@ -27,7 +28,8 @@ module.exports = {
             //创建一个在内存中生成html页面的插件
             template:path.join(__dirname,'./src/index.html'),//指定模板页面，将来会根据指定的页面，在内存中生成页面
             filename:'index.html'//指定生成的页面的名称
-        })
+        }),
+        new VueLoaderPlugin()
     ],
     module:{//这个节点用于配置所有第三方模块加载器
         rules:[
@@ -37,7 +39,8 @@ module.exports = {
             {test:/\.scss$/,  use:['style-loader','css-loader','sass-loader']},
             {test:/\.jpg|png|gif|bmp|ttf|eot|svg|woff|woff2$/,use:'url-loader?limit=116940'},//问号是传参，？后的是loader的参数项
             //limit用来指定图片的大小，单位是字节，只有小于limit的图片才会被转为base64图片，而转为base64的图片加载的更快一些
-            {test:/\.js$/, use:'babel-loader', exclude:/node_modules/}//exclude为排除项，表示babel-loader不需要处理node_modules中的js文件
+            {test:/\.js$/, use:'babel-loader', exclude:/node_modules/},//exclude为排除项，表示babel-loader不需要处理node_modules中的js文件
+            {test:/\.vue$/, use:'vue-loader'}
         ]
     }
   };

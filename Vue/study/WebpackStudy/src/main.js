@@ -33,3 +33,14 @@ console.log(Person)
 // 通过【webpack ./src/main.js -o ./dist/bundle.js --mode production】这一条指令，能够发现：
 // 1.webpack能够处理JS文件之间的互相依赖关系
 // 2.webpack能够处理JS的兼容问题，把高级的、浏览器不识别的语法转化为低级的、浏览器能识别的语法
+
+//=======================================================================================
+
+import Vue from 'vue'
+// 导入单文件组件
+import App from'./components/App.vue'
+
+const vm = new Vue({
+    el:'#app',
+    render: h => h(App)
+})
