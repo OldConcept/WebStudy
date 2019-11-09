@@ -28,7 +28,15 @@ module.exports = {
             template:path.join(__dirname,'./src/index.html'),//指定模板页面，将来会根据指定的页面，在内存中生成页面
             filename:'index.html'//指定生成的页面的名称
         })
-    ]
+    ],
+    module:{//这个节点用于配置所有第三方模块加载器
+        rules:[
+            {test:/\.css$/,  use:['style-loader','css-loader','postcss-loader']},
+            //css-loader必须处于style-loader后
+            {test:/\.less$/,  use:['style-loader','css-loader','less-loader']},
+            {test:/\.scss$/,  use:['style-loader','css-loader','sass-loader']}
+        ]
+    }
   };
 
 // 实践证明：在webpack4.x的版本中，只需要设置属性hot的值为true就行，在webpack3.x的版本中，需要这三步，在实际开发中，更推荐直接dev2这种写法
