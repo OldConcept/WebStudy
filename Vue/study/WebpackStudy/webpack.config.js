@@ -34,7 +34,10 @@ module.exports = {
             {test:/\.css$/,  use:['style-loader','css-loader','postcss-loader']},
             //css-loader必须处于style-loader后
             {test:/\.less$/,  use:['style-loader','css-loader','less-loader']},
-            {test:/\.scss$/,  use:['style-loader','css-loader','sass-loader']}
+            {test:/\.scss$/,  use:['style-loader','css-loader','sass-loader']},
+            {test:/\.jpg|png|gif|bmp|ttf|eot|svg|woff|woff2$/,use:'url-loader?limit=116940'},//问号是传参，？后的是loader的参数项
+            //limit用来指定图片的大小，单位是字节，只有小于limit的图片才会被转为base64图片，而转为base64的图片加载的更快一些
+            {test:/\.js$/, use:'babel-loader', exclude:/node_modules/}//exclude为排除项，表示babel-loader不需要处理node_modules中的js文件
         ]
     }
   };
